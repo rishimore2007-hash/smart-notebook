@@ -1,0 +1,2748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Smart Notebook — Write. Learn. Achieve.</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background: #050506;
+    color: #fff;
+
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+}
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root {
+    --black: #050506;
+    --dark: #0b0b0e;
+    --card: #111116;
+
+    --purple: #8064ff;
+    --purple-light: #ad9aff;
+    --blue: #6d8cff;
+
+    --white: #ffffff;
+    --gray: #8c8c97;
+
+    --green: #55d88b;
+
+    --line: rgba(255,255,255,.09);
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.nav {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 76px;
+
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 6vw;
+
+    background: rgba(5,5,6,.65);
+
+    backdrop-filter: blur(25px);
+
+    border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.logo span {
+    color: var(--purple-light);
+}
+
+.nav-links {
+    display: flex;
+    gap: 32px;
+}
+
+.nav-links a {
+    font-size: 13px;
+    color: #999;
+
+    transition: .25s;
+}
+
+.nav-links a:hover {
+    color: white;
+}
+
+.nav-button {
+    background: white;
+
+    color: #111;
+
+    padding: 11px 20px;
+
+    border-radius: 100px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    transition: .3s;
+}
+
+.nav-button:hover {
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    min-height: 100vh;
+
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding:
+        160px
+        5vw
+        100px;
+
+    text-align: center;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(110,80,255,.22),
+            transparent 32%
+        ),
+        #050506;
+}
+
+.hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 850px;
+    height: 850px;
+
+    top: 100px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background: #7254ff;
+
+    filter: blur(240px);
+
+    opacity: .08;
+}
+
+.badge {
+    position: relative;
+
+    padding: 9px 16px;
+
+    border-radius: 100px;
+
+    border: 1px solid rgba(255,255,255,.12);
+
+    background: rgba(255,255,255,.04);
+
+    color: #aaa;
+
+    font-size: 11px;
+
+    margin-bottom: 30px;
+}
+
+.hero h1 {
+    position: relative;
+
+    max-width: 1150px;
+
+    font-size: clamp(60px, 10vw, 145px);
+
+    line-height: .83;
+
+    letter-spacing: -8px;
+
+    font-weight: 800;
+}
+
+.hero h1 .outline {
+    color: transparent;
+
+    -webkit-text-stroke:
+        1px
+        rgba(255,255,255,.45);
+}
+
+.hero h1 .gradient {
+    background:
+        linear-gradient(
+            110deg,
+            #fff,
+            #8b72ff,
+            #cfc5ff
+        );
+
+    -webkit-background-clip: text;
+
+    color: transparent;
+}
+
+.hero-text {
+    position: relative;
+
+    max-width: 650px;
+
+    margin-top: 35px;
+
+    color: #858590;
+
+    line-height: 1.7;
+
+    font-size: 17px;
+}
+
+.hero-buttons {
+    position: relative;
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 35px;
+}
+
+.btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 15px 24px;
+
+    border-radius: 100px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    transition: .3s;
+}
+
+.primary {
+    background: white;
+
+    color: #111;
+}
+
+.primary:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 15px 50px
+        rgba(255,255,255,.13);
+}
+
+.secondary {
+    border:
+        1px solid
+        rgba(255,255,255,.14);
+
+    background:
+        rgba(255,255,255,.04);
+}
+
+.secondary:hover {
+    background:
+        rgba(255,255,255,.09);
+}
+
+
+/* =========================================================
+   PRODUCT
+========================================================= */
+
+.product {
+    position: relative;
+
+    width: min(1050px,95vw);
+
+    height: 600px;
+
+    margin-top: 60px;
+
+    perspective: 1400px;
+}
+
+.product-shadow {
+    position: absolute;
+
+    width: 600px;
+    height: 100px;
+
+    left: 50%;
+    bottom: 80px;
+
+    transform: translateX(-50%);
+
+    background: #7254ff;
+
+    filter: blur(100px);
+
+    opacity: .2;
+}
+
+.device {
+    position: absolute;
+
+    width: min(750px,88vw);
+
+    aspect-ratio: 1.5;
+
+    left: 50%;
+    top: 45px;
+
+    transform:
+        translateX(-50%)
+        rotateX(15deg)
+        rotateY(-17deg)
+        rotateZ(-3deg);
+
+    border-radius: 32px;
+
+    padding: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #35353b,
+            #111114 45%,
+            #29292e
+        );
+
+    box-shadow:
+        0 80px 100px rgba(0,0,0,.65),
+        inset 0 0 0 1px rgba(255,255,255,.12);
+
+    transition: 1s;
+}
+
+.device:hover {
+    transform:
+        translateX(-50%)
+        rotateX(5deg)
+        rotateY(-6deg)
+        rotateZ(-1deg)
+        translateY(-12px);
+}
+
+.screen {
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 21px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eee9dd,
+            #ddd8cc
+        );
+
+    color: #25231f;
+
+    padding: 35px;
+
+    text-align: left;
+}
+
+.screen-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    color: #77736b;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+}
+
+.screen-title {
+    margin-top: 55px;
+
+    font-family: Georgia, serif;
+
+    font-size: clamp(32px,5vw,60px);
+
+    line-height: .95;
+}
+
+.screen-lines {
+    margin-top: 25px;
+}
+
+.screen-line {
+    height: 5px;
+
+    width: 72%;
+
+    background: #a8a297;
+
+    opacity: .45;
+
+    border-radius: 10px;
+
+    margin: 10px 0;
+}
+
+.screen-line.short {
+    width: 52%;
+}
+
+.handwriting {
+    position: absolute;
+
+    right: 40px;
+    top: 115px;
+
+    color: #7258e9;
+
+    font-family: "Comic Sans MS", cursive;
+
+    font-size: 19px;
+
+    transform: rotate(-5deg);
+}
+
+
+/* AI CARD */
+
+.ai-card {
+    position: absolute;
+
+    right: 28px;
+    bottom: 28px;
+
+    width: 215px;
+
+    padding: 17px;
+
+    border-radius: 16px;
+
+    background:
+        rgba(255,255,255,.82);
+
+    backdrop-filter: blur(15px);
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.12);
+}
+
+.ai-header {
+    color: #7257ed;
+
+    font-size: 10px;
+
+    font-weight: 800;
+}
+
+.ai-card p {
+    margin-top: 8px;
+
+    color: #666;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+
+/* FLOATING DATA */
+
+.float {
+    position: absolute;
+
+    padding: 14px 17px;
+
+    border-radius: 15px;
+
+    background:
+        rgba(18,18,22,.78);
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    backdrop-filter: blur(15px);
+
+    text-align: left;
+}
+
+.float.one {
+    left: 20px;
+    top: 220px;
+}
+
+.float.two {
+    right: 15px;
+    top: 140px;
+}
+
+.float strong {
+    display: block;
+
+    font-size: 20px;
+}
+
+.float small {
+    color: #777;
+
+    font-size: 9px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   MARQUEE
+========================================================= */
+
+.marquee {
+    overflow: hidden;
+
+    border-top:
+        1px solid var(--line);
+
+    border-bottom:
+        1px solid var(--line);
+
+    padding: 25px 0;
+
+    color: #666;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    white-space: nowrap;
+}
+
+.track {
+    display: inline-block;
+
+    animation:
+        scroll 28s linear infinite;
+}
+
+.track span {
+    margin: 0 35px;
+}
+
+@keyframes scroll {
+
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+
+}
+
+
+/* =========================================================
+   GENERAL SECTIONS
+========================================================= */
+
+.section {
+    padding: 150px 7vw;
+
+    position: relative;
+}
+
+.eyebrow {
+    color: var(--purple-light);
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+}
+
+.title {
+    max-width: 900px;
+
+    margin-top: 20px;
+
+    font-size: clamp(48px,7vw,100px);
+
+    line-height: .9;
+
+    letter-spacing: -5px;
+}
+
+.description {
+    max-width: 600px;
+
+    margin-top: 28px;
+
+    color: #858590;
+
+    font-size: 17px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   CORE BENEFITS
+========================================================= */
+
+.benefit-grid {
+
+    margin-top: 85px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(12,1fr);
+
+    gap: 18px;
+}
+
+.benefit {
+
+    position: relative;
+
+    min-height: 360px;
+
+    padding: 35px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #111115,
+            #09090c
+        );
+
+    overflow: hidden;
+
+    transition: .4s;
+}
+
+.benefit:hover {
+    transform: translateY(-8px);
+
+    border-color:
+        rgba(128,100,255,.35);
+}
+
+.benefit.large {
+    grid-column: span 7;
+}
+
+.benefit.small {
+    grid-column: span 5;
+}
+
+.benefit h3 {
+    margin-top: 90px;
+
+    font-size: 32px;
+
+    letter-spacing: -1px;
+}
+
+.benefit p {
+    max-width: 410px;
+
+    margin-top: 13px;
+
+    color: #777780;
+
+    line-height: 1.6;
+
+    font-size: 14px;
+}
+
+.number {
+    color: #555;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+}
+
+.glow {
+    position: absolute;
+
+    width: 260px;
+    height: 260px;
+
+    right: -80px;
+    bottom: -100px;
+
+    border-radius: 50%;
+
+    background: #8064ff;
+
+    filter: blur(80px);
+
+    opacity: .18;
+}
+
+
+/* =========================================================
+   HANDWRITING
+========================================================= */
+
+.hand-section {
+
+    background:
+        radial-gradient(
+            circle at 80% 50%,
+            rgba(128,100,255,.16),
+            transparent 30%
+        ),
+        #08080a;
+}
+
+.hand-demo {
+
+    margin-top: 85px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+}
+
+.paper {
+
+    min-height: 450px;
+
+    padding: 45px;
+
+    border-radius: 28px;
+
+    background: #e8e3d7;
+
+    color: #292721;
+}
+
+.paper small {
+
+    color: #777;
+
+    font-family: Arial;
+}
+
+.bad-writing {
+
+    margin-top: 65px;
+
+    font-family: "Comic Sans MS", cursive;
+
+    font-size: 30px;
+
+    color: #555;
+
+    transform: rotate(-3deg);
+}
+
+.arrow {
+
+    text-align: center;
+
+    color: #8064ff;
+
+    font-size: 35px;
+
+    margin: 20px 0;
+}
+
+.clean-writing {
+
+    margin-top: 20px;
+
+    font-family: Georgia, serif;
+
+    font-size: 30px;
+
+    color: #4f3eb0;
+}
+
+.ai-result {
+
+    min-height: 450px;
+
+    padding: 35px;
+
+    border-radius: 28px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    background: #101014;
+}
+
+.ai-result-top {
+
+    color: #a291ff;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+.result-box {
+
+    margin-top: 35px;
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    background: #18181d;
+
+    border:
+        1px solid
+        rgba(255,255,255,.06);
+}
+
+.result-box h4 {
+
+    font-size: 20px;
+}
+
+.result-box p {
+
+    margin-top: 12px;
+
+    color: #888;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   VOICE + REMINDER
+========================================================= */
+
+.two-column {
+
+    margin-top: 80px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+}
+
+.dark-card {
+
+    min-height: 390px;
+
+    padding: 35px;
+
+    border-radius: 28px;
+
+    background: #111115;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.voice-circle {
+
+    width: 150px;
+    height: 150px;
+
+    margin-top: 60px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #9b84ff,
+            #5d45d8
+        );
+
+    box-shadow:
+        0 0 100px
+        rgba(128,100,255,.4);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 45px;
+}
+
+.reminder {
+
+    margin-top: 50px;
+
+    padding: 20px;
+
+    border-radius: 18px;
+
+    background: #18181d;
+
+    border: 1px solid rgba(255,255,255,.07);
+}
+
+.reminder-date {
+
+    color: #8e79ff;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+}
+
+.reminder h4 {
+
+    margin-top: 12px;
+
+    font-size: 18px;
+}
+
+.reminder p {
+
+    margin-top: 7px;
+
+    color: #777;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   FOCUS MODE
+========================================================= */
+
+.focus {
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(100,75,255,.2),
+            transparent 35%
+        ),
+        #060608;
+
+    text-align: center;
+}
+
+.focus-flow {
+
+    margin-top: 85px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    flex-wrap: wrap;
+}
+
+.flow-card {
+
+    width: 180px;
+
+    min-height: 180px;
+
+    padding: 25px 18px;
+
+    border-radius: 22px;
+
+    background: #111116;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+}
+
+.flow-number {
+
+    width: 35px;
+    height: 35px;
+
+    border-radius: 50%;
+
+    background: #8064ff;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
+
+    margin-bottom: 18px;
+}
+
+.flow-card h4 {
+
+    font-size: 15px;
+}
+
+.flow-card p {
+
+    margin-top: 7px;
+
+    color: #777;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+.flow-arrow {
+
+    color: #8064ff;
+
+    font-size: 28px;
+}
+
+
+/* unlock card */
+
+.unlock {
+
+    max-width: 700px;
+
+    margin: 70px auto 0;
+
+    padding: 28px;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(128,100,255,.16),
+            rgba(255,255,255,.03)
+        );
+
+    border:
+        1px solid
+        rgba(128,100,255,.25);
+}
+
+.unlock strong {
+
+    font-size: 16px;
+}
+
+.unlock p {
+
+    margin-top: 10px;
+
+    color: #999;
+
+    line-height: 1.6;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   PREMIUM
+========================================================= */
+
+.premium {
+
+    background:
+        linear-gradient(
+            135deg,
+            #15101f,
+            #08080b
+        );
+}
+
+.premium-box {
+
+    margin-top: 80px;
+
+    padding: 55px;
+
+    border-radius: 35px;
+
+    border:
+        1px solid
+        rgba(150,125,255,.25);
+
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(128,100,255,.22),
+            transparent 30%
+        ),
+        #0d0d11;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.premium-badge {
+
+    display: inline-block;
+
+    padding: 7px 12px;
+
+    border-radius: 100px;
+
+    background:
+        rgba(128,100,255,.15);
+
+    color: #a997ff;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+.premium-box h3 {
+
+    margin-top: 25px;
+
+    font-size: 45px;
+
+    letter-spacing: -2px;
+}
+
+.premium-grid {
+
+    margin-top: 45px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 15px;
+}
+
+.premium-feature {
+
+    padding: 23px;
+
+    border-radius: 18px;
+
+    background: #15151a;
+
+    border:
+        1px solid
+        rgba(255,255,255,.06);
+}
+
+.premium-feature strong {
+
+    font-size: 15px;
+}
+
+.premium-feature p {
+
+    margin-top: 9px;
+
+    color: #777;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   USERS
+========================================================= */
+
+.users {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 18px;
+
+    margin-top: 80px;
+}
+
+.user-card {
+
+    min-height: 280px;
+
+    padding: 30px;
+
+    border-radius: 25px;
+
+    background: #111115;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+.user-icon {
+
+    font-size: 30px;
+
+    margin-bottom: 60px;
+}
+
+.user-card h3 {
+
+    font-size: 23px;
+}
+
+.user-card p {
+
+    margin-top: 10px;
+
+    color: #777;
+
+    line-height: 1.6;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   ENVIRONMENT
+========================================================= */
+
+.environment {
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(60,180,110,.13),
+            transparent 35%
+        ),
+        #070909;
+}
+
+.environment .title {
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.environment .description {
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tree {
+
+    width: 150px;
+    height: 150px;
+
+    margin: 70px auto 0;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #55d88b,
+            #197844
+        );
+
+    box-shadow:
+        0 0 100px
+        rgba(70,210,130,.3);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 60px;
+}
+
+
+/* =========================================================
+   FINAL CTA
+========================================================= */
+
+.final {
+
+    min-height: 90vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            #523bb7,
+            transparent 45%
+        ),
+        #050506;
+}
+
+.final-content {
+
+    position: relative;
+
+    z-index: 2;
+}
+
+.final h2 {
+
+    max-width: 1000px;
+
+    font-size:
+        clamp(55px,9vw,125px);
+
+    line-height: .85;
+
+    letter-spacing: -7px;
+}
+
+.final h2 span {
+
+    color: #957fff;
+}
+
+.final p {
+
+    max-width: 560px;
+
+    margin: 30px auto;
+
+    color: #999;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+
+    padding: 45px 7vw;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    background: #050506;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+footer small {
+
+    color: #555;
+}
+
+.footer-links {
+
+    display: flex;
+
+    gap: 25px;
+
+    color: #666;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:850px) {
+
+    .nav-links {
+        display: none;
+    }
+
+    .hero {
+        padding-top: 125px;
+    }
+
+    .hero h1 {
+        letter-spacing: -4px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+
+        width: 260px;
+    }
+
+    .product {
+        height: 430px;
+    }
+
+    .device {
+        width: 94vw;
+
+        top: 60px;
+
+        transform:
+            translateX(-50%)
+            rotateX(7deg)
+            rotateY(-6deg);
+    }
+
+    .float {
+        display: none;
+    }
+
+    .ai-card {
+        width: 155px;
+
+        right: 15px;
+        bottom: 15px;
+    }
+
+    .section {
+        padding: 100px 6vw;
+    }
+
+    .title {
+        letter-spacing: -3px;
+    }
+
+    .benefit-grid,
+    .users,
+    .premium-grid,
+    .two-column,
+    .hand-demo {
+        grid-template-columns: 1fr;
+    }
+
+    .benefit.large,
+    .benefit.small {
+        grid-column: span 1;
+    }
+
+    .story {
+        grid-template-columns: 1fr;
+    }
+
+    .focus-flow {
+        flex-direction: column;
+    }
+
+    .flow-arrow {
+        transform: rotate(90deg);
+    }
+
+    .premium-box {
+        padding: 30px;
+    }
+
+    .premium-box h3 {
+        font-size: 35px;
+    }
+
+    footer {
+        flex-direction: column;
+
+        gap: 20px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAV
+===================================================== -->
+
+<nav class="nav">
+
+    <a href="#" class="logo">
+        Smart<span>Notebook</span>
+    </a>
+
+    <div class="nav-links">
+
+        <a href="#features">Features</a>
+
+        <a href="#focus">Focus Mode</a>
+
+        <a href="#premium">Premium</a>
+
+        <a href="#users">Who It's For</a>
+
+    </div>
+
+    <a href="#buy" class="nav-button">
+        Get Smart Notebook
+    </a>
+
+</nav>
+
+
+
+<!-- =====================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+    <div class="badge">
+        ✦ The notebook that works with you
+    </div>
+
+
+    <h1>
+
+        <span class="outline">
+            WRITE.
+        </span>
+
+        <br>
+
+        <span class="gradient">
+            THINK SMARTER.
+        </span>
+
+    </h1>
+
+
+    <p class="hero-text">
+
+        Smart Notebook turns your handwritten notes
+        into an organized, intelligent and searchable
+        digital workspace — while helping you stay
+        focused on what matters.
+
+    </p>
+
+
+    <div class="hero-buttons">
+
+        <a href="#features"
+           class="btn primary">
+
+            Discover Smart Notebook →
+
+        </a>
+
+        <a href="#focus"
+           class="btn secondary">
+
+            See Focus Mode
+
+        </a>
+
+    </div>
+
+
+
+    <!-- PRODUCT -->
+
+    <div class="product">
+
+        <div class="product-shadow"></div>
+
+
+        <div class="float one">
+
+            <strong>
+                ∞
+            </strong>
+
+            <small>
+                Notes & ideas
+            </small>
+
+        </div>
+
+
+        <div class="float two">
+
+            <strong>
+                AI
+            </strong>
+
+            <small>
+                Built into your notebook
+            </small>
+
+        </div>
+
+
+        <div class="device">
+
+            <div class="screen">
+
+                <div class="screen-top">
+
+                    <span>
+                        SMART NOTEBOOK
+                    </span>
+
+                    <span>
+                        MONDAY · 10:00 AM
+                    </span>
+
+                </div>
+
+
+                <div class="screen-title">
+
+                    Python<br>
+                    Functions
+
+                </div>
+
+
+                <div class="screen-lines">
+
+                    <div class="screen-line"></div>
+
+                    <div class="screen-line"></div>
+
+                    <div class="screen-line short"></div>
+
+                    <div class="screen-line"></div>
+
+                </div>
+
+
+                <div class="handwriting">
+
+                    def hello():<br>
+                    &nbsp;&nbsp;print("Hello!")
+
+                </div>
+
+
+                <div class="ai-card">
+
+                    <div class="ai-header">
+
+                        ✦ SMART AI
+
+                    </div>
+
+                    <p>
+
+                        Handwriting recognized.
+                        Notes organized under
+                        <strong>Python → Functions.</strong>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     MARQUEE
+===================================================== -->
+
+<div class="marquee">
+
+    <div class="track">
+
+        <span>WRITE</span>
+        <span>ORGANIZE</span>
+        <span>LEARN</span>
+        <span>FOCUS</span>
+        <span>REMEMBER</span>
+        <span>CREATE</span>
+
+        <span>WRITE</span>
+        <span>ORGANIZE</span>
+        <span>LEARN</span>
+        <span>FOCUS</span>
+        <span>REMEMBER</span>
+        <span>CREATE</span>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     FEATURES
+========================================================= -->
+
+<section class="section" id="features">
+
+    <div class="eyebrow">
+        ONE NOTEBOOK. MANY POSSIBILITIES.
+    </div>
+
+
+    <h2 class="title">
+
+        Your notes.<br>
+        Smarter than ever.
+
+    </h2>
+
+
+    <p class="description">
+
+        Everything you write is stored, organized and
+        ready when you need it. Smart Notebook brings
+        your notes, reminders, learning tools and
+        AI together in one place.
+
+    </p>
+
+
+
+    <div class="benefit-grid">
+
+
+        <div class="benefit large">
+
+            <div class="number">
+                01 / DIGITAL NOTES
+            </div>
+
+            <h3>
+                Never lose<br>
+                your notes again.
+            </h3>
+
+            <p>
+
+                Your notes are stored digitally and backed up.
+                Even if your Smart Notebook is lost or damaged,
+                your important work can remain safely preserved.
+
+            </p>
+
+            <div class="glow"></div>
+
+        </div>
+
+
+
+        <div class="benefit small">
+
+            <div class="number">
+                02 / STORAGE
+            </div>
+
+            <h3>
+                Your library.<br>
+                Always with you.
+            </h3>
+
+            <p>
+
+                Store years of notes, subjects, projects,
+                documents and learning material in one
+                organized digital space.
+
+            </p>
+
+        </div>
+
+
+
+        <div class="benefit small">
+
+            <div class="number">
+                03 / ORGANIZATION
+            </div>
+
+            <h3>
+                Everything<br>
+                in its place.
+            </h3>
+
+            <p>
+
+                Subjects, chapters, projects and topics
+                can be organized automatically so you
+                spend less time searching.
+
+            </p>
+
+        </div>
+
+
+
+        <div class="benefit large">
+
+            <div class="number">
+                04 / TIME
+            </div>
+
+            <h3>
+                Spend less time<br>
+                managing notes.
+            </h3>
+
+            <p>
+
+                Search, organize, summarize and access
+                your notes without going through piles
+                of notebooks and loose pages.
+
+            </p>
+
+            <div class="glow"></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     HANDWRITING
+========================================================= -->
+
+<section class="section hand-section">
+
+    <div class="eyebrow">
+        AI HANDWRITING
+    </div>
+
+
+    <h2 class="title">
+
+        Your handwriting.<br>
+        Made beautiful.
+
+    </h2>
+
+
+    <p class="description">
+
+        Write naturally. Smart Notebook can recognize
+        your handwriting and convert it into clean,
+        readable digital text.
+
+    </p>
+
+
+    <div class="hand-demo">
+
+
+        <div class="paper">
+
+            <small>
+                YOUR ORIGINAL NOTE
+            </small>
+
+
+            <div class="bad-writing">
+
+                Python functions
+                are blocks of code
+                designed to perform
+                a specific task.
+
+            </div>
+
+
+            <div class="arrow">
+                ↓
+            </div>
+
+
+            <div class="clean-writing">
+
+                Python Functions
+
+            </div>
+
+        </div>
+
+
+
+        <div class="ai-result">
+
+            <div class="ai-result-top">
+
+                ✦ AI HANDWRITING ENGINE
+
+            </div>
+
+
+            <div class="result-box">
+
+                <h4>
+                    Clean digital notes
+                </h4>
+
+                <p>
+
+                    Your handwriting is recognized
+                    and transformed into clear,
+                    organized digital text.
+
+                </p>
+
+            </div>
+
+
+            <div class="result-box">
+
+                <h4>
+                    Searchable
+                </h4>
+
+                <p>
+
+                    Once converted, your notes can
+                    be searched just like typed text.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     VOICE + REMINDERS
+========================================================= -->
+
+<section class="section">
+
+    <div class="eyebrow">
+        CAPTURE IDEAS INSTANTLY
+    </div>
+
+
+    <h2 class="title">
+        Think it.<br>
+        Say it. Save it.
+    </h2>
+
+
+    <p class="description">
+
+        Sometimes writing isn't the fastest way to capture
+        an idea. Just speak — Smart Notebook can turn
+        your voice into notes.
+
+    </p>
+
+
+
+    <div class="two-column">
+
+
+        <div class="dark-card">
+
+            <div class="number">
+                05 / AI VOICE NOTES
+            </div>
+
+            <div class="voice-circle">
+                🎙
+            </div>
+
+            <h3 style="margin-top:35px;">
+                "Explain Python loops..."
+            </h3>
+
+        </div>
+
+
+
+        <div class="dark-card">
+
+            <div class="number">
+                06 / SMART REMINDERS
+            </div>
+
+
+            <div class="reminder">
+
+                <div class="reminder-date">
+                    Tomorrow · 10:00 AM
+                </div>
+
+                <h4>
+                    Python Assignment
+                </h4>
+
+                <p>
+                    Finish exercises 4–8
+                    before tomorrow's class.
+                </p>
+
+            </div>
+
+
+            <div class="reminder">
+
+                <div class="reminder-date">
+                    Friday · 6:00 PM
+                </div>
+
+                <h4>
+                    Mock Test
+                </h4>
+
+                <p>
+                    Revise Chapter 5.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOCUS MODE
+========================================================= -->
+
+<section class="section focus" id="focus">
+
+    <div class="eyebrow">
+        THE FEATURE THAT CHANGES EVERYTHING
+    </div>
+
+
+    <h2 class="title"
+        style="margin-left:auto;margin-right:auto;">
+
+        Don't fight<br>
+        distraction.<br>
+        <span style="color:#8e78ff;">
+            Design it away.
+        </span>
+
+    </h2>
+
+
+    <p class="description"
+       style="margin-left:auto;margin-right:auto;">
+
+        Smart Notebook can work with your phone to create
+        dedicated study sessions. Your schedule becomes
+        a commitment — not just another notification.
+
+    </p>
+
+
+
+    <div class="focus-flow">
+
+
+        <div class="flow-card">
+
+            <div class="flow-number">
+                01
+            </div>
+
+            <h4>
+                Schedule
+            </h4>
+
+            <p>
+                Monday · 10–12
+                Python study session.
+            </p>
+
+        </div>
+
+
+        <div class="flow-arrow">
+            →
+        </div>
+
+
+        <div class="flow-card">
+
+            <div class="flow-number">
+                02
+            </div>
+
+            <h4>
+                Focus
+            </h4>
+
+            <p>
+                Your connected phone
+                enters focus mode.
+            </p>
+
+        </div>
+
+
+        <div class="flow-arrow">
+            →
+        </div>
+
+
+        <div class="flow-card">
+
+            <div class="flow-number">
+                03
+            </div>
+
+            <h4>
+                Learn
+            </h4>
+
+            <p>
+                Attend your lecture
+                and study without distractions.
+            </p>
+
+        </div>
+
+
+        <div class="flow-arrow">
+            →
+        </div>
+
+
+        <div class="flow-card">
+
+            <div class="flow-number">
+                04
+            </div>
+
+            <h4>
+                Prove it
+            </h4>
+
+            <p>
+                Complete your AI-generated
+                quiz after studying.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="unlock">
+
+        <strong>
+            🔓 Pass the quiz → unlock your phone
+        </strong>
+
+        <p>
+
+            Instead of automatically rewarding distraction,
+            Smart Notebook can make your progress the key.
+            Complete your study session and pass the quiz
+            to finish your focus challenge.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PREMIUM AI
+========================================================= -->
+
+<section class="section premium" id="premium">
+
+    <div class="eyebrow">
+        SMART NOTEBOOK PREMIUM
+    </div>
+
+
+    <h2 class="title">
+
+        Turn notes<br>
+        into knowledge.
+
+    </h2>
+
+
+    <p class="description">
+
+        Premium unlocks a deeper AI learning experience.
+        Your own notes become the raw material for
+        personalized study content.
+
+    </p>
+
+
+
+    <div class="premium-box">
+
+        <div class="premium-badge">
+            PREMIUM AI
+        </div>
+
+
+        <h3>
+            Your notes become your teacher.
+        </h3>
+
+
+        <div class="premium-grid">
+
+
+            <div class="premium-feature">
+
+                <strong>
+                    🎬 AI Video Notes
+                </strong>
+
+                <p>
+                    Transform your notes into
+                    easy-to-follow AI-generated
+                    video learning content.
+                </p>
+
+            </div>
+
+
+            <div class="premium-feature">
+
+                <strong>
+                    🧠 AI Quiz
+                </strong>
+
+                <p>
+                    Generate quizzes directly
+                    from the material you studied.
+                </p>
+
+            </div>
+
+
+            <div class="premium-feature">
+
+                <strong>
+                    📝 Mock Tests
+                </strong>
+
+                <p>
+                    Create practice tests and
+                    test yourself before the real exam.
+                </p>
+
+            </div>
+
+
+            <div class="premium-feature">
+
+                <strong>
+                    🎯 Class Tests
+                </strong>
+
+                <p>
+                    Turn your prepared notes into
+                    personalized test sessions.
+                </p>
+
+            </div>
+
+
+            <div class="premium-feature">
+
+                <strong>
+                    ✦ Summaries
+                </strong>
+
+                <p>
+                    Quickly turn long notes into
+                    concise revision material.
+                </p>
+
+            </div>
+
+
+            <div class="premium-feature">
+
+                <strong>
+                    🔎 Smart Search
+                </strong>
+
+                <p>
+                    Ask questions and find relevant
+                    information across your notes.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     WHO IT'S FOR
+========================================================= -->
+
+<section class="section" id="users">
+
+    <div class="eyebrow">
+        NOT JUST FOR STUDENTS
+    </div>
+
+
+    <h2 class="title">
+
+        One notebook.<br>
+        Every kind of work.
+
+    </h2>
+
+
+    <p class="description">
+
+        Smart Notebook adapts to the way different
+        people work, learn and organize information.
+
+    </p>
+
+
+
+    <div class="users">
+
+
+        <div class="user-card">
+
+            <div class="user-icon">
+                🎓
+            </div>
+
+            <h3>
+                Students
+            </h3>
+
+            <p>
+
+                Notes, homework, assignments,
+                lectures, revision, quizzes and
+                focused study sessions.
+
+            </p>
+
+        </div>
+
+
+        <div class="user-card">
+
+            <div class="user-icon">
+                💼
+            </div>
+
+            <h3>
+                Professionals
+            </h3>
+
+            <p>
+
+                Meeting notes, projects, ideas,
+                schedules, tasks and work
+                documentation.
+
+            </p>
+
+        </div>
+
+
+        <div class="user-card">
+
+            <div class="user-icon">
+                🧾
+            </div>
+
+            <h3>
+                Retailers & Business
+            </h3>
+
+            <p>
+
+                Journals, records, calculations,
+                daily business notes and
+                organized digital documentation.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ENVIRONMENT
+========================================================= -->
+
+<section class="section environment">
+
+    <div class="eyebrow">
+        BETTER FOR THE PLANET
+    </div>
+
+
+    <h2 class="title">
+
+        Fewer notebooks.<br>
+        Less paper.<br>
+        More possibilities.
+
+    </h2>
+
+
+    <p class="description">
+
+        By reducing the need for constantly replacing
+        paper notebooks and printed material, Smart
+        Notebook can help reduce paper consumption
+        and the resources required to produce it.
+
+    </p>
+
+
+    <div class="tree">
+        🌱
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FINAL CTA
+========================================================= -->
+
+<section class="final" id="buy">
+
+    <div class="final-content">
+
+        <div class="eyebrow">
+            YOUR NEXT NOTEBOOK
+        </div>
+
+
+        <h2>
+
+            Write less.<br>
+
+            <span>
+                Achieve more.
+            </span>
+
+        </h2>
+
+
+        <p>
+
+            One intelligent notebook for your notes,
+            your learning, your work and your ideas.
+
+        </p>
+
+
+        <a
+            href="mailto:hello@smartnotebook.com"
+            class="btn primary">
+
+            Join the Smart Notebook journey →
+
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <div>
+
+        <div class="logo">
+            Smart<span>Notebook</span>
+        </div>
+
+        <small>
+            Write. Learn. Achieve.
+        </small>
+
+    </div>
+
+
+    <div class="footer-links">
+
+        <span>
+            Features
+        </span>
+
+        <span>
+            Premium
+        </span>
+
+        <span>
+            Contact
+        </span>
+
+        <span>
+            © 2026
+        </span>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+/* Scroll reveal */
+
+const revealItems =
+    document.querySelectorAll(
+        ".benefit, .hand-demo > div, .dark-card, .flow-card, .premium-box, .user-card, .tree"
+    );
+
+const observer =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.style.opacity = "1";
+
+                    entry.target.style.transform =
+                        "translateY(0)";
+
+                }
+
+            });
+
+        },
+        {
+            threshold: .12
+        }
+    );
+
+
+revealItems.forEach(item => {
+
+    item.style.opacity = "0";
+
+    item.style.transform =
+        "translateY(35px)";
+
+    item.style.transition =
+        "opacity .8s ease, transform .8s ease";
+
+    observer.observe(item);
+
+});
+
+
+/* Product reacts to mouse */
+
+const device =
+    document.querySelector(".device");
+
+
+document.addEventListener(
+    "mousemove",
+    event => {
+
+        if (window.innerWidth < 850)
+            return;
+
+        const x =
+            (event.clientX /
+            window.innerWidth - .5) * 8;
+
+        const y =
+            (event.clientY /
+            window.innerHeight - .5) * 5;
+
+        device.style.transform =
+            `translateX(-50%)
+             rotateX(${15-y}deg)
+             rotateY(${-17+x}deg)
+             rotateZ(-3deg)`;
+
+    }
+);
+
+</script>
+
+</body>
+</html>
